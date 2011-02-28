@@ -1,27 +1,28 @@
-var canvas;
-var ctx;
-var canvasW;
-var canvasH;
-var centerX;
-var centerY;
-var mouseX;
-var mouseY;
-var mouseEffectRange = 30;
-var amount = 500;
-var particles = [];
-var startSmooth = 60;
-var loopSmooth = 16;
-var endAngle = Math.PI * 2;
-var isMouseDown = false;
+var canvas = null,
+	ctx = null,
+	canvasW = null,
+	canvasH = null,
+	centerX = null,
+	centerY = null,
+	mouseX = null,
+	mouseY = null,
+	mouseEffectRange = null,
+	amount = 500,
+	particles = [],
+	startSmooth = 60,
+	loopSmooth = 16,
+	endAngle = Math.PI * 2,
+	isMouseDown = false;
 
-init();
+window.addEventListener('load', init, false);
 
 function init () {
 	canvas = document.getElementById('world');
-	canvasW = canvas.width;
-	canvasH = canvas.height;
+	canvasW = canvas.width = window.innerWidth;
+	canvasH = canvas.height = window.innerHeight;
 	centerX = canvasW / 2;
 	centerY = canvasH / 2;
+	mouseEffectRange = Math.max(canvasW, canvasH) * 0.03;
 	smooth = startSmooth;
 	if (canvas.getContext) {
 		setup();
@@ -33,6 +34,7 @@ function setup () {
 	ctx = canvas.getContext('2d');
 
 	var i = amount;
+
 	while (i--) {
 		var p = new Particle();
 		p.degree = Math.floor( Math.random() * 360 );
@@ -50,7 +52,7 @@ function setup () {
 	var itvl = setInterval(function () {
 		smooth--;
 		if (smooth === loopSmooth) clearInterval(itvl);
-	}, 1000/8);
+	}, 16);
 }
 
 function loop () {
@@ -116,12 +118,10 @@ function loop () {
 		p.degree = p.degree % 360;
 	}
 
-    /*
-	 * ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-	 * if (mx && my) {
-	 *     ctx.fillRect(mx-range, my-range, range*2, range*2);
-	 * }
-     */
+	//ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+	//if (mx && my) {
+		//ctx.fillRect(mx-range, my-range, range*2, range*2);
+	//}
 
 }
 
